@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-const contact = [];
+const contacts = [];
 
 const about = {
     "info": "This is the about page."
@@ -19,24 +19,24 @@ app.get("/about", (req, res) => {
 });
 
 app.post("/contact", (req, res) => {
-    const contactData = req.body;
-    if (contactData.name && contactData.email) {
-        contact.push(contactData);
+    const contactsData = req.body;
+    if (contactsData.name && contactsData.email) {
+        contacts.push(contactsData);
         const id = contacts.length -1;
-        console.log(`Contact added: ${contactData.name}`);
-        res.status(200).send({id, ...contactData});
+        console.log(`contacts added: ${contactsData.name}`);
+        res.status(200).send({id, ...contactsData});
     } else {
         res.status(400).send({
-            error: "contact information required"
+            error: "contacts information required"
         })
     }
 });
 
 app.get("/user/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    const contactData = contacts[id];
-    if (contactData) {
-        res.json(contactData);
+    const contactsData = contacts[id];
+    if (contactsData) {
+        res.json(contactsData);
     } else {
         res.status(404).send({
             error: "User not found"
